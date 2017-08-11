@@ -8,9 +8,10 @@
 	define( 'MANTIS_USER',	'user' );
 	define( 'MANTIS_PWD',	'password' );
 	
-	// if true, this script is running on the same machine hosting mantis,
-	// so we can use its API directly
-	define( 'MANTIS_LOCAL',	true );
+	// If true, this script is running on the same machine hosting mantis,
+	// so we can use its API directly.
+	// Recommendation: Use the SOAP API. It should be more stable.
+	define( 'MANTIS_LOCAL',	false );
 	// path to your mantis installation, only needed if MANTIS_LOCAL is true
 	define( 'MANTIS_PATH',	dirname( __FILE__ ) . '/../mantis/' );
 

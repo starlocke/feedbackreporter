@@ -81,7 +81,7 @@ class Mantis
 				
 				$t_version_id = version_get_id( $version, $projID );
 				
-				if ( !is_blank( $v_date_order )) {
+				if ( isset($v_date_order) && !is_blank( $v_date_order )) {
 					
 					$t_version             = version_get( $t_version_id );
 					$t_version->date_order = date( "Y-m-d H:i:s", strtotime( $v_date_order ));
@@ -146,11 +146,19 @@ class Mantis
 			$tmpFile = tempnam( sys_get_temp_dir(), 'feedback' );
 			
 			file_put_contents( $tmpFile, $str );
-		
-			file_add( $bugID, $tmpFile, $name, 'text/plain' );
+
+			$mock_file = [
+				'name' => $name,
+				'type' => 'text/plain',
+				'size' => strlen($str), // gets number of bytes, not number of characters
+				'tmp_name' => $tmpFile
+			];
+			// MantisBT's new `file_add()` requires a special array,
+			// as in the output of the gpc_get_file() "filter" function.
+			$mantis_file_handler = gpc_get_file(null, $mock_file);
+			file_add( $bugID, $mantis_file_handler, 'bug', $name, 'text/plain' );
 
 			unlink( $tmpFile );
-			
 		} else
 			/*$this->client->mc_issue_attachment_add( MANTIS_USER, MANTIS_PWD, $bugID,
 										  			$name, 'text/plain', $str ); */
