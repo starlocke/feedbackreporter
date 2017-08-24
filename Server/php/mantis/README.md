@@ -40,6 +40,18 @@ sets its own default values.
   - `BUG_SUMMARY` constant dropped in favour of providing
     a more verbose summary line.
 
+## !!IMPORTANT!! Server Configuration for Security
+
+You must configure your web server to block requests to:
+
+- config.php
+- config.private.php
+- mantis.php
+
+You should configure your web server to block requests to:
+
+- README.md
+
 # MantisBT Integration, 2011-edition
 
 ## Introduction
